@@ -3,7 +3,7 @@ from django.http import JsonResponse
 import os
 from .models import File
 
-def index(request):
+def uploadview(request):
     if request.method == 'POST':  
         file = request.FILES['file'].read()
         fileName= request.POST['filename']
@@ -16,7 +16,7 @@ def index(request):
             return res
         else:
             if existingPath == 'null':
-                path = 'media/' + fileName
+                path = 'uploader/media/' + fileName
                 with open(path, 'wb+') as destination: 
                     destination.write(file)
                 FileFolder = File()
@@ -31,7 +31,7 @@ def index(request):
                 return res
 
             else:
-                path = 'media/' + existingPath
+                path = 'uploader/media/' + existingPath
                 model_id = File.objects.get(existingPath=existingPath)
                 if model_id.name == fileName:
                     if not model_id.eof:
@@ -50,4 +50,4 @@ def index(request):
                 else:
                     res = JsonResponse({'data':'No such file exists in the existingPath'})
                     return res
-    return render(request, 'upload.html')
+    return render(request, 'uploader/upload.html')

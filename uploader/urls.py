@@ -1,7 +1,8 @@
 from django.urls import path
 
-from . import views
+from .views import uploadview
 
+app_name = 'uploader'
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', uploadview, name='uploadview'),
 ]
